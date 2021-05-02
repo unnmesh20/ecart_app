@@ -6,7 +6,7 @@ class CartItem < ApplicationRecord
 
     def validate_quantity
         if quantity < MINIMUM_QUANTITY
-            cart_items.errors.add(:quantity, "Quantity cannot be less than 1")
+            self.errors.add(:quantity, "Quantity cannot be less than 1")
         end
     end
 
