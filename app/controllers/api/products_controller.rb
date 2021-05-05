@@ -10,9 +10,7 @@ module Api
           products = @category.products.paginate(page: params[:page],per_page:5)
         else
           products =@category.products.find_by(name:search)
-        end
-
-        
+        end        
         render json: products
       end
   
