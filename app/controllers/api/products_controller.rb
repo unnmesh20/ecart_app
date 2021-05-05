@@ -4,11 +4,20 @@ module Api
       before_action :fetch_category
       
       def index
-        products = @category.products
+        # binding.pry
+        search=params[:product_name]
+        if search.nil?
+          products = @category.products.paginate(page: params[:page],per_page:5)
+        else
+          products =@category.products.find_by(name:search)
+        end
+
+        
         render json: products
       end
   
       def show
+        #binding.pry
         product = @category.products
                     .where(id: params[:id]).first
   
