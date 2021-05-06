@@ -3,7 +3,7 @@ class User < ApplicationRecord
     ExpiredToken = Class.new(StandardError)
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable
+  devise :database_authenticatable, :confirmable
   #, :registerable,
    #      :recoverable, :rememberable, :validatable
     has_one :cart
@@ -13,6 +13,7 @@ class User < ApplicationRecord
     has_many :order_items, through: :orders
     
     after_create :create_cart
+    
 
     # VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   
@@ -64,7 +65,7 @@ class User < ApplicationRecord
             
             raise InvalidToken if user.blank?
             
-            if(Time.now - user.token_created_at) > 20.hours
+            if(Time.now - user.token_created_at) > 2.hours
                 raise ExpiredToken
             end
 
