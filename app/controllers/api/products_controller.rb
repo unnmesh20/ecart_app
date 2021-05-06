@@ -6,10 +6,11 @@ module Api
       def index
         # binding.pry
         search=params[:product_name]
+        data = @category.products
         if search.nil?
           products = @category.products.paginate(page: params[:page],per_page:5)
         else
-          products =@category.products.find_by(name:search)
+          products =@category.products.where("name like :search", search: "%#{search}%").paginate(page: params[:page],per_page:5)
         end        
         render json: products
       end
