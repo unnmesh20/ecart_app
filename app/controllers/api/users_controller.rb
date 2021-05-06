@@ -23,6 +23,21 @@ module Api
             end
 
         end
+
+        def confirm_email
+            user=User.find_by_confirm_token(params[:id])
+            if user
+                user.email_activate
+                render json:{
+                    "master says":"Successful" 
+                }, status: :ok
+            else
+                render json:{
+                    "master says":"Unsuccessful"
+                }, status: :unauthorized
+            end
+        end
+
      
     end
     

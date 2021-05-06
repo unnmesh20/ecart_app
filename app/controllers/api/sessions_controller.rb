@@ -1,12 +1,12 @@
 module Api
     class SessionsController < ApplicationController
       skip_before_action :authenticate!
+
       def create
         user = User.where(
           email: params[:email]
         ).first
 
-        #binding.pry
 
         if user.blank?
           render json:{
