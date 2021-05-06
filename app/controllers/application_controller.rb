@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
   JWT_SECRET_KEY = Rails.application.secrets.secret_key_base
-  JWT_ALGORITH = 'HS512'
+  JWT_ALGORITHM = 'HS512'
 
   before_action :authenticate!
 
@@ -35,11 +35,11 @@ class ApplicationController < ActionController::API
 
   def encode_token(payload, exp = 2.days.from_now)
     payload[:exp] = exp.to_i
-    JWT.encode(payload, JWT_SECRET_KEY, JWT_ALGORITH)
+    JWT.encode(payload, JWT_SECRET_KEY, JWT_ALGORITHM)
   end
   
   def decode_token(token)
-    JWT.decode(token, JWT_SECRET_KEY, true, algorithm: JWT_ALGORITH).first
+    JWT.decode(token, JWT_SECRET_KEY, true, algorithm: JWT_ALGORITHM).first
   end
 
 end
